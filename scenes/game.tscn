@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=1]
+
+[ext_resource path="res://assets/img_fundoChao.png" type="Texture" id=1]
+[ext_resource path="res://assets/felpudoIdle.png" type="Texture" id=2]
+[ext_resource path="res://assets/felpudoBate.png" type="Texture" id=3]
+[ext_resource path="res://assets/grave.png" type="Texture" id=4]
+
+[node name="GameNode" type="Node2D"]
+
+[node name="Backgroud" type="Sprite" parent="."]
+
+transform/pos = Vector2( -758.5, -33.47 )
+transform/scale = Vector2( 2.028, 2.1017 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="ZeTimber" type="Node2D" parent="."]
+
+transform/pos = Vector2( 220, 1070 )
+
+[node name="Idle" type="Sprite" parent="ZeTimber"]
+
+transform/scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 2 )
+
+[node name="Hitting" type="Sprite" parent="ZeTimber"]
+
+visibility/visible = false
+transform/scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 3 )
+
+[node name="Grave" type="Sprite" parent="ZeTimber"]
+
+visibility/visible = false
+transform/pos = Vector2( -46, 40 )
+transform/scale = Vector2( 0.2075, 0.1454 )
+texture = ExtResource( 4 )
+flip_h = true
+modulate = Color( 0.345098, 0.698039, 0.172549, 1 )
+
+
