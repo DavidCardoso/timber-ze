@@ -1,37 +1,43 @@
 extends Node2D
 
-const LEFT = -1
-const RIGHT = 1
+const LEFT = 1
+const RIGHT = 2
 
 var side = self.LEFT
 
 onready var idle = self.get_node("Idle")
-onready var hit = self.get_node("Hitting")
+onready var hitting = self.get_node("Hitting")
 onready var grave = self.get_node("Grave")
 onready var anim = self.get_node("Anim")
 
 func _ready():
 	pass
 
-func moveToLeft():
+func move_to_left():
 	self.set_pos(Vector2(220, 1070))
 	
 	idle.set_flip_h(false)
-	hit.set_flip_h(false)
+	hitting.set_flip_h(false)
 	
 	grave.set_pos(Vector2(-44, 41))
 	grave.set_flip_h(true)
-	self.side = self.LEFT
+	side = self.LEFT
 
-func moveToRight():
+func move_to_right():
 	self.set_pos(Vector2(500, 1070))
 	
 	idle.set_flip_h(true)
-	hit.set_flip_h(true)
-	
+	hitting.set_flip_h(true)
+
 	grave.set_pos(Vector2(28, 41))
 	grave.set_flip_h(false)
-	self.side = self.RIGHT
+	side = self.RIGHT
 
 func hit():
-	self.anim.play("Hit")
+	anim.play("Hit")
+
+func lose():
+	anim.stop()
+	idle.hide()
+	hitting.hide()
+	grave.show()
