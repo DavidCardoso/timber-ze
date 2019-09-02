@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=1]
+[gd_scene load_steps=11 format=1]
 
 [ext_resource path="res://scripts/game.gd" type="Script" id=1]
 [ext_resource path="res://assets/img_fundoChao.png" type="Texture" id=2]
@@ -6,6 +6,9 @@
 [ext_resource path="res://assets/felpudoIdle.png" type="Texture" id=4]
 [ext_resource path="res://assets/felpudoBate.png" type="Texture" id=5]
 [ext_resource path="res://assets/grave.png" type="Texture" id=6]
+[ext_resource path="res://scripts/time-marker.gd" type="Script" id=7]
+[ext_resource path="res://assets/barra_recipiente.png" type="Texture" id=8]
+[ext_resource path="res://assets/barra.png" type="Texture" id=9]
 
 [sub_resource type="Animation" id=1]
 
@@ -66,6 +69,7 @@ drag_margin/bottom = 0.2
 
 [node name="ZeTimber" type="Node2D" parent="."]
 
+editor/display_folded = true
 transform/pos = Vector2( 220, 1070 )
 z/z = 2
 script/script = ExtResource( 3 )
@@ -104,5 +108,21 @@ autoplay = ""
 [node name="Barrels" type="Node2D" parent="."]
 
 [node name="DestroyedBarrels" type="Node2D" parent="."]
+
+[node name="TimeMarker" type="Node2D" parent="."]
+
+transform/pos = Vector2( 360, 100 )
+transform/scale = Vector2( 2, 2 )
+script/script = ExtResource( 7 )
+
+[node name="Border" type="Sprite" parent="TimeMarker"]
+
+texture = ExtResource( 8 )
+
+[node name="Marker" type="Sprite" parent="TimeMarker"]
+
+texture = ExtResource( 9 )
+region = true
+region_rect = Rect2( 0, 0, 188, 23 )
 
 

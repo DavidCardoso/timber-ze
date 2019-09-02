@@ -36,7 +36,7 @@ func move_to_right():
 func hit():
 	anim.play("Hit")
 
-func lose():
+func die():
 	anim.stop()
 	idle.hide()
 	hitting.hide()

@@ -5,6 +5,7 @@ const RIGHT = 2
 const HEIGHT_BARREL = 172
 const POS_Y_INI_BARREL = 1090
 const HALF_SCREEN = 360
+const TIME_BONUS = 0.014
 
 var last_enemy = false
 var playing = true
@@ -19,10 +20,12 @@ onready var zeTimber = self.get_node("ZeTimber")
 onready var camera = self.get_node("Camera")
 onready var barrels = self.get_node("Barrels")
 onready var destroyedBarrels = self.get_node("DestroyedBarrels")
+onready var timeMarker = self.get_node("TimeMarker")
 
 func _ready():
 	randomize()
-	self.init_barrels()
+	init_barrels()
+	timeMarker.connect("lost", self, "lose")
 	set_process_input(true)
 
 func _input(event):
@@ -49,11 +52,12 @@ func _input(event):
 			
 			first_barrel.destroy(zeTimber.side)
 			
+			timeMarker.add(self.TIME_BONUS)
+			
 			move_barrels_to_bottom()
 			
 			if check_collision():
-				self.playing = false
-				zeTimber.lose()
+				lose()
 
 func generate_barrel(type, position):
 	var barrel
@@ -106,3 +110,7 @@ func move_barrels_to_bottom():
 	for b in barrels.get_children():
 		b.set_pos(b.get_pos() + Vector2(0, self.HEIGHT_BARREL))
 
+func lose():
+	self.playing = false
+	zeTimber.die()
+	timeMarker.set_process(false)
