@@ -9,6 +9,7 @@ const TIME_BONUS = 0.014
 
 var last_enemy = false
 var playing = true
+var score = 0
 
 var barrelTypes = {
 	"normal" : preload("res://scenes/barrel.tscn"),
@@ -21,6 +22,7 @@ onready var camera = self.get_node("Camera")
 onready var barrels = self.get_node("Barrels")
 onready var destroyedBarrels = self.get_node("DestroyedBarrels")
 onready var timeMarker = self.get_node("TimeMarker")
+onready var labelScore = self.get_node("Score/Label")
 
 func _ready():
 	randomize()
@@ -43,17 +45,8 @@ func _input(event):
 		# hit a barrel
 		if !check_collision():
 			zeTimber.hit()
-			
-			var first_barrel = barrels.get_children()[0]
-			
-			barrels.remove_child(first_barrel)
-			
-			destroyedBarrels.add_child(first_barrel)
-			
-			first_barrel.destroy(zeTimber.side)
-			
 			timeMarker.add(self.TIME_BONUS)
-			
+			increase_score()
 			move_barrels_to_bottom()
 			
 			if check_collision():
@@ -105,12 +98,24 @@ func check_collision():
 	return false
 
 func move_barrels_to_bottom():
+	var first_barrel = barrels.get_children()[0]
+	barrels.remove_child(first_barrel)
+	destroyedBarrels.add_child(first_barrel)
+	first_barrel.destroy(zeTimber.side)
 	rand_barrel(calc_pos_ini_barrel(10))
 	
 	for b in barrels.get_children():
 		b.set_pos(b.get_pos() + Vector2(0, self.HEIGHT_BARREL))
 
+func increase_score():
+	self.score += 1
+	labelScore.set_text(str(self.score))
+
 func lose():
 	self.playing = false
 	zeTimber.die()
 	timeMarker.set_process(false)
+	self.get_node("TimerRestartGame").start()
+
+func _on_TimerRestartGame_timeout():
+	get_tree().reload_current_scene()
